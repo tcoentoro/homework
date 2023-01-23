@@ -1,0 +1,2 @@
+Hello TCO, your home is /home/TCO, and your shell is /bin/bash
+E.coli
