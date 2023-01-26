@@ -7,7 +7,7 @@
 
 dna = 'ACTGAAAAAAAAAAA'
 rdna = dna[::-1]
-for i in range(len(rdna)):
+for i in range(len(rdna)-1):
 	if rdna[i] == 'A' : cdna = 'T'
 	if rdna[i] == 'T' : cdna = 'A'
 	if rdna[i] == 'C' : cdna = 'G'
