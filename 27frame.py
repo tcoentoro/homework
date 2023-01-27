@@ -8,6 +8,11 @@
 
 dna = 'ATGGCCTTT'
 
+for position in range(len(dna)):
+	if 		(position+1) % 3 == 0: frame= '2'
+	elif 	(position+1) % 2 == 0: frame= '1'
+	else						 : frame= '0'
+	print(position, frame, dna[position])
 
 """
 python3 27frame.py
