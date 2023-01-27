@@ -7,6 +7,26 @@
 # Report the length, AT fraction, and sequence
 
 # Note: set random.seed() if you want repeatable random numbers
+import random
+
+length = 30
+count = 0
+countAT = 0
+dna = ''
+
+for i in range(length):
+	count += 1
+	r = random.randint(1,6)
+	if 		r == 1 or r == 2: nt = 'A'
+	elif 	r == 3 or r == 4: nt = 'T'
+	elif 	r == 5			: nt = 'C'
+	else					: nt = 'G'
+	
+	dna += nt
+	if nt == 'A' or nt == 'T' : countAT += 1
+	
+
+print(length, countAT/length, dna)
 
 
 """
