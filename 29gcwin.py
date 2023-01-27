@@ -14,12 +14,12 @@
 seq = 'ACGACGCAGGAGGAGAGTTTCAGAGATCACGAATACATCCATATTACCCAGAGAGAG'
 w = 11
 for i in range(0, len(seq) -w +1):
-	frame = seq[i:i+w]
+	fraction = seq[i:i+w]
 	countcg = 0
-	for j in range(len(frame)):
-		if frame[j] == 'C' or frame[j] == 'G': countcg +=1
-		percentage = (countcg/len(frame))
-	print(i, frame, f'{percentage:.4f}')		
+	for j in range(len(fraction)):
+		if fraction[j] == 'C' or fraction[j] == 'G': countcg +=1
+		percentage = (countcg/len(fraction))
+	print(i, fraction, f'{percentage:.4f}')		
 
 """
 python3 26gcwin.py
