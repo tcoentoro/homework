@@ -6,8 +6,13 @@
 
 # Note: you may not import math or any other library
 
-n = 5 # use this value for your computation
+import math
 
+n = 5 # use this value for your computation
+rsum= 0
+for i in range(n):
+	rsum += i+1
+print(n, rsum, math.factorial(n))
 
 """
 python3 22sumfac.py
