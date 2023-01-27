@@ -6,13 +6,14 @@
 # Also print out how many combinations there are
 
 # Hint: if you get stuck for more than 10 minutes, get help
+
 count= 0
 aalphabet= 'ACDEFGHIKLMNPQRSTVWY'
 for aa1 in range(len(aalphabet)):
 	for aa2 in range(len(aalphabet)):
-			if aa1 >= aa2 or aa1 == aa2 : continue
-			count += 1
-			print(aalphabet[aa1], aalphabet[aa2])	
+		if aa1 >= aa2 or aa1 == aa2 : continue
+		count += 1
+		print(aalphabet[aa1], aalphabet[aa2])	
 print(count)
 
 """
