@@ -6,7 +6,14 @@
 # Also print out how many combinations there are
 
 # Hint: if you get stuck for more than 10 minutes, get help
-
+count= 0
+aalphabet= 'ACDEFGHIKLMNPQRSTVWY'
+for aa1 in range(len(aalphabet)):
+	for aa2 in range(len(aalphabet)):
+			if aa1 >= aa2: continue
+			if not aa1 == aa2: count +=1
+			if not aa1 == aa2: print(aalphabet[aa1], aalphabet[aa2])	
+print(count)
 
 """
 python3 28aapairs.py
