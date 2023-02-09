@@ -28,7 +28,7 @@ mid = len(numbers) // 2
 median = None
 
 if len(numbers) % 2 == 0:
-	median = (numbers[mid] + numbers[mid+1])/2
+	median = (numbers[mid] + numbers[mid-1])/2
 else:
 	median = numbers[mid]
 
@@ -43,7 +43,6 @@ sd = (sumdistance/len(numbers)) ** 0.5
 
 
 #Output
-print(numbers)
 print(f'Count: {len(numbers)}')
 print(f'Minimum: {numbers[0]:.1f}')
 print(f'Maximum: {numbers[-1]:.1f}')
