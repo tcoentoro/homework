@@ -60,7 +60,7 @@ print(prob)
 
 
 
-""" # Miniature Version
+""" # Miniature Labeled Version
 trials = 5
 ppl = 5
 days = 10
