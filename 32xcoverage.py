@@ -48,7 +48,7 @@ print(f'Genome: {genome}')
 """
 
 
-#Template
+#Sequencing Depth Tally
 coverage = []
 
 for i in range(gsize): # <-- sequence length
@@ -59,27 +59,21 @@ for j in range(rnum): # <-- number of reads
 	
 	for k in range(rlen):
 		coverage[nucnum + k] += 1
-	
-	print(f'Read {j + 1}: Position {nucnum + 1} ')
+
+#Calculating average
 
 print('---------')
+
 print(f'Coverage: {coverage}')
-print(f'Geonome Size: {gsize} nucleotides')
+print(f'Geonome Size: {gsize}')
 print(f'Read Number: {rnum}')
 print(f'Read Length: {rlen}')
 
+print('---------')
 
-
-'''
-#test can i add stuff to a list
-
-haha = [0, 0, 0, 0]
-
-for i in range(3):
-	haha[i] += 1
-
-print(haha)
-'''
+print(f'Minimum: {min(coverage)}')
+print(f'Maximum: {max(coverage)}')
+print(f'Ave. coverage: ')
 
 """
 python3 32xcoverage.py 1000 100 100
