@@ -27,27 +27,6 @@ gsize = vals[0]
 rnum = vals[1]
 rlen = vals[2]
 
-
-
-"""
-#Nucleotide Generators
-genome = []
-
-for i in range(gsize): # <-- Genome
-	nuc = random.choice('ACGT')
-	genome.append(nuc)
-
-
-for j in range(rnum): # <-- Reads
-	nucnum = random.randint(0, gsize - rlen)
-	
-	for k in range(rlen):
-
-#output
-print(f'Genome: {genome}')
-"""
-
-
 #Sequencing Depth Tally
 coverage = []
 
@@ -63,15 +42,6 @@ for j in range(rnum): # <-- number of reads
 #Calculating average
 total = sum(coverage)
 average = total/gsize
-
-print('---------')
-
-print(f'Coverage: {coverage}')
-print(f'Genome Size: {gsize}')
-print(f'Read Number: {rnum}')
-print(f'Read Length: {rlen}')
-
-print('---------')
 
 print(f'Minimum: {min(coverage)}')
 print(f'Maximum: {max(coverage)}')
