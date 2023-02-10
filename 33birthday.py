@@ -10,6 +10,97 @@
 # Variation: try making the calendar a list
 # Variation: try making the birthdays a list
 
+import sys
+import random
+
+
+#List Formation
+vals = []
+
+for val in sys.argv[1:]:
+	vals.append(float(val))
+
+print(vals)
+
+#Calculations
+trials = 10000 # <-- How many times do you want to run it?
+ppl = int(vals[1])
+days = vals[0]
+num_matches = 0
+
+#loop for number of trial runs
+for l in range(trials):
+	bdays = []
+	match = False
+	
+	#loop to generate list of birthdates
+	for i in range(ppl):
+		date= random.randint(1, days)
+		bdays.append(date)
+	
+	#loop for birthdate 1
+	for j in range(len(bdays)):
+		
+		#loop for birthdate 2
+		for k in range(j+1, len(bdays)):
+			if bdays[j] == bdays[k]:
+				match = True;
+				break
+			else:
+				continue
+
+		if match:
+			num_matches += 1;
+			break
+			
+
+prob = num_matches/trials
+
+print(prob)
+
+
+
+""" # Miniature Version
+trials = 5
+ppl = 5
+days = 10
+num_matches = 0
+
+
+
+
+for l in range(trials): # <-- Number of calculations
+	bdays = []
+	match = False
+	
+	for i in range(ppl):
+		date= random.randint(1, days)
+		bdays.append(date)
+
+	for j in range(len(bdays)):
+		
+		for k in range(j+1, len(bdays)):
+			if bdays[j] == bdays[k]:
+				match = True;
+				print(bdays[j], bdays[k], 'Yep');
+				break
+			else:
+				print(bdays[j], bdays[k], 'Nope')
+
+		if match:
+			num_matches += 1;
+			break
+			
+	print(bdays)
+
+prob = num_matches/trials
+
+print(num_matches)
+print(prob)
+"""
+
+
+
 
 """
 python3 33birthday.py 365 23
