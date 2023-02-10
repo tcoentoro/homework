@@ -46,8 +46,6 @@ for l in range(trials):
 			if bdays[j] == bdays[k]:
 				match = True;
 				break
-			else:
-				continue
 
 		if match:
 			num_matches += 1;
