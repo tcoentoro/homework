@@ -57,15 +57,17 @@ for i in range(gsize): # <-- sequence length
 for j in range(rnum): # <-- number of reads
 	nucnum = random.randint(0, gsize - rlen)
 	
-	for k in range(rlen):
+	for k in range(rlen): # <-- loop for tally
 		coverage[nucnum + k] += 1
 
 #Calculating average
+total = sum(coverage)
+average = total/gsize
 
 print('---------')
 
 print(f'Coverage: {coverage}')
-print(f'Geonome Size: {gsize}')
+print(f'Genome Size: {gsize}')
 print(f'Read Number: {rnum}')
 print(f'Read Length: {rlen}')
 
@@ -73,7 +75,7 @@ print('---------')
 
 print(f'Minimum: {min(coverage)}')
 print(f'Maximum: {max(coverage)}')
-print(f'Ave. coverage: ')
+print(f'Ave. coverage: {average}')
 
 """
 python3 32xcoverage.py 1000 100 100
