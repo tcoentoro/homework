@@ -15,14 +15,14 @@ import sys
 import math
 
 
-#List of Values
+#Input
 vals = []
 
 for val in sys.argv[1:]:
 	try:
 		p = float(val)
 	except:
-		raise ValueError(f'cannot convert "{i}" to a number')
+		raise ValueError(f'cannot convert "{val}" to a number')
 	vals.append(float(val))
 
 #Total prob = 1

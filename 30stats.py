@@ -9,7 +9,7 @@
 
 import sys
 
-#List sorting
+#Input
 numbers = []
 
 for num in sys.argv[1:]:

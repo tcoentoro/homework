@@ -14,7 +14,7 @@ import sys
 import random
 
 
-#List Formation
+#Input
 vals = []
 
 for val in sys.argv[1:]:
@@ -22,7 +22,7 @@ for val in sys.argv[1:]:
 
 print(vals)
 
-#Calculations
+#Simulator Calculations
 trials = 10000 # <-- How many times do you want to run it?
 ppl = int(vals[1])
 days = vals[0]
