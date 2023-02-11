@@ -28,24 +28,32 @@ rnum = vals[1]
 rlen = vals[2]
 
 #ReSequencing Depth Tally
-coverage = []
+coverage0 = []
 
 for i in range(gsize): # <-- sequence length
-	coverage.append(0)
+	coverage0.append(0)
 
 for j in range(rnum): # <-- number of reads
 	nucnum = random.randint(0, gsize - rlen)
 	
 	for k in range(rlen): # <-- depth tally
-		coverage[nucnum + k] += 1
+		coverage0[nucnum + k] += 1
 
+#Undersample Removal
+coverage = []
+cutoff = 1
+
+for depth in coverage0:
+	if depth >= cutoff: coverage.append(depth)
+	
 #Stats Calculations
 minimum = min(coverage)
 maximum = max(coverage)
 total = sum(coverage)
-average = total/gsize
+average = total/len(coverage)
 
-print(minimum, maximum, average)
+#Output
+print(f'{minimum} {maximum} {average:.5f}')
 
 """
 python3 32xcoverage.py 1000 100 100
