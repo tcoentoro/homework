@@ -27,7 +27,7 @@ gsize = vals[0]
 rnum = vals[1]
 rlen = vals[2]
 
-#Sequencing Depth Tally
+#ReSequencing Depth Tally
 coverage = []
 
 for i in range(gsize): # <-- sequence length
@@ -36,16 +36,16 @@ for i in range(gsize): # <-- sequence length
 for j in range(rnum): # <-- number of reads
 	nucnum = random.randint(0, gsize - rlen)
 	
-	for k in range(rlen): # <-- loop for tally
+	for k in range(rlen): # <-- depth tally
 		coverage[nucnum + k] += 1
 
-#Calculating average
+#Stats Calculations
+minimum = min(coverage)
+maximum = max(coverage)
 total = sum(coverage)
 average = total/gsize
 
-print(f'Minimum: {min(coverage)}')
-print(f'Maximum: {max(coverage)}')
-print(f'Ave. coverage: {average}')
+print(minimum, maximum, average)
 
 """
 python3 32xcoverage.py 1000 100 100
