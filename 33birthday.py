@@ -56,50 +56,6 @@ prob = num_matches/trials
 
 print(prob)
 
-
-
-""" # Initial Labeled Version
-trials = 5
-ppl = 5
-days = 10
-num_matches = 0
-
-
-
-
-for l in range(trials): # <-- Number of calculations
-	bdays = []
-	match = False
-	
-	for i in range(ppl):
-		date= random.randint(1, days)
-		bdays.append(date)
-
-	for j in range(len(bdays)):
-		
-		for k in range(j+1, len(bdays)):
-			if bdays[j] == bdays[k]:
-				match = True;
-				print(bdays[j], bdays[k], 'Yep');
-				break
-			else:
-				print(bdays[j], bdays[k], 'Nope')
-
-		if match:
-			num_matches += 1;
-			break
-			
-	print(bdays)
-
-prob = num_matches/trials
-
-print(num_matches)
-print(prob)
-"""
-
-
-
-
 """
 python3 33birthday.py 365 23
 0.571
