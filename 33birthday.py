@@ -29,7 +29,23 @@ num_matches = 0
 #loop for number of trial runs
 for l in range(trials):
 	bdays = []
+	
+	#list of bdays + cross checking
+	for i in range(ppl):
+		date= random.randint(1, days)
+		
+		if date in bdays:
+			num_matches += 1
+			break
+		else:
+			bdays.append(date)
+
+''' OLD
+#loop for number of trial runs
+for l in range(trials):
+	bdays = []
 	match = False
+	
 	
 	#loop to generate list of birthdates
 	for i in range(ppl):
@@ -49,6 +65,7 @@ for l in range(trials):
 			num_matches += 1;
 			break
 			
+'''
 
 prob = num_matches/trials
 

@@ -28,10 +28,7 @@ for val in sys.argv[1:]:
 #Total prob = 1
 total_1 = sum(vals)
 
-try:
-	assert(math.isclose(total_1, 1.0))
-except:
-	raise ValueError(f'The sum of your probabilities is not 1')
+assert(math.isclose(total_1, 1.0))
 
 #Calculations
 entropy = 0

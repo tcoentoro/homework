@@ -40,12 +40,8 @@ for j in range(rnum): # <-- number of reads
 		coverage0[nucnum + k] += 1
 
 #Undersample Removal
-coverage = []
-cutoff = 5
+coverage = coverage0[rlen:-rlen]
 
-for depth in coverage0:
-	if depth >= cutoff: coverage.append(depth)
-	
 #Stats Calculations
 minimum = min(coverage)
 maximum = max(coverage)
