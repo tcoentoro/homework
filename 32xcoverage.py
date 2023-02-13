@@ -41,7 +41,7 @@ for j in range(rnum): # <-- number of reads
 
 #Undersample Removal
 coverage = []
-cutoff = 1
+cutoff = 5
 
 for depth in coverage0:
 	if depth >= cutoff: coverage.append(depth)
