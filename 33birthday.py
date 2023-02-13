@@ -37,8 +37,8 @@ for l in range(trials):
 		if date in bdays:
 			num_matches += 1
 			break
-		else:
-			bdays.append(date)
+		
+		bdays.append(date)
 
 ''' OLD
 #loop for number of trial runs
