@@ -20,8 +20,6 @@ vals = []
 for val in sys.argv[1:]:
 	vals.append(float(val))
 
-print(vals)
-
 #Simulator Calculations
 trials = 10000 # <-- How many times do you want to run it?
 ppl = int(vals[1])
