@@ -36,7 +36,7 @@ for i in range(gsize): # <-- sequence length
 for j in range(rnum): # <-- number of reads
 	nucnum = random.randint(0, gsize - rlen)
 	
-	for k in range(rlen): # <-- depth tally
+	for k in range(rlen): # <-- length of read
 		coverage0[nucnum + k] += 1
 
 #Undersample Removal
