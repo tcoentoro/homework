@@ -12,9 +12,11 @@
 import sys
 import gzip
 
+"""
+#Attempt 1
 fp = gzip.open(sys.argv[1], 'rt')
 aas = 'ACDEFGHIKLMNPQRSTVWY'
-tally = [0]*len(aas)
+tally = [0] * len(aas)
 
 for line in fp.readlines():
 	if line.startswith('>'): continue
@@ -30,9 +32,46 @@ for i in range(len(aas)):
 	print(f'{aas[i]} {tally[i]} {tally[i]/totalaa:.4f}')
 
 fp.close()
+"""
 
+#Attempt 2
+aas = 'ACDEFGHIKLMNPQRSTVWY'
+tally = [0] * len(aas)
 
+with gzip.open(sys.argv[1], 'rt') as fp:
+	while True:
+		line = fp.readline()
+		if line == '': break
+		if line.startswith('>'): continue
+		
+		for aa in range(len(aas)):
+			for aaline in line:
+				if aaline == aas[aa]: tally[aa] += 1
+	
+totalaa = sum(tally)
 
+for i in range(len(aas)):
+	print(f'{aas[i]} {tally[i]} {tally[i]/totalaa:.4f}')
+
+"""
+#Classroom Attempt
+aas = 'ACDEFGHIKLMNPQRSTVWY'
+total = 0
+caa = [0] * len(aas)
+
+with gzip.open(sys.argv[1], 'rt') as fp:
+	for line in fp.readlines():
+		line = line.rstrip()
+		#print(line)
+		if not line.startswith('>'):
+			total += len(line)
+			for i in range(len(aas)):
+				aa = aas[i]
+				caa[i] += line.count(aa)
+			
+for aa in aas:
+	print(f'{aa} {caa[aas.find(aa)]} {caa[aas.find(aa)]/total:.4f}')
+"""
 """
 python3 40aacomp.py ~/DATA/E.coli/GCF_000005845.2_ASM584v2_protein.faa.gz
 A 126893 0.0954
