@@ -9,6 +9,29 @@
 # Variation: use 20 named variables
 # Variation: use a list
 
+import sys
+import gzip
+
+fp = gzip.open(sys.argv[1], 'rt')
+aas = 'ACDEFGHIKLMNPQRSTVWY'
+tally = [0]*len(aas)
+
+for line in fp.readlines():
+	if line.startswith('>'): continue
+	line.rstrip()
+
+	for aa in aas:
+		for aaprotein in line:
+			if aaprotein == aa: tally[aas.find(aa)] += 1
+
+totalaa = sum(tally)
+
+for i in range(len(aas)):
+	print(f'{aas[i]} {tally[i]} {tally[i]/totalaa:.4f}')
+
+fp.close()
+
+
 
 """
 python3 40aacomp.py ~/DATA/E.coli/GCF_000005845.2_ASM584v2_protein.faa.gz
