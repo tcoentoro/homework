@@ -75,7 +75,7 @@ for defline, seq in mcb185.read_fasta(sys.argv[1]):
 			seq_win2 = seq[k + cutoff:k + cutoff + ahelix]
 			
 			if 'P'in seq_win2: continue
-			if ave_hydrop(seq_win2) < kd_ahelix: continue
+			elif ave_hydrop(seq_win2) < kd_ahelix: continue
 			else:
 				ahelix_nyeh = True
 				break
