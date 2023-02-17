@@ -31,6 +31,8 @@ aas = 'ACDEFGHIKLMNPQRSTVWY'
 for hehe in range(20):
 	sample += random.choice(aas)
 
+
+#Function for Kyle-Dolittle Hydrophobicity
 def kd_hydrop(aa):
 	hydrop = 0
 
@@ -40,23 +42,60 @@ def kd_hydrop(aa):
 	hydrop += aas_hs[aas.find(aa)]
 	return hydrop
 
-def ave_hydrop(seq):
+#Function for Average Hydrophobicity in a window
+def ave_hydrop(window):
 	total_hydrop = 0
 	
-	for i in range(len(seq)):
-		total_hydrop += kd_hydrop(seq[i])
+	for i in range(len(window)):
+		total_hydrop += kd_hydrop(window[i])
 	
-	average = total_hydrop/len(seq)
+	average = total_hydrop/len(window)
 	return average
 
-
-print(sample, ave_hydrop(sample))
-"""
+#Filtering though data
 for defline, seq in mcb185.read_fasta(sys.argv[1]):
 	words = defline.split()
 	name = words[0]
-	print(name, defline, seq[0:20])
-"""
+
+	speptide = 8
+	kd_peptide = 2.5
+	signal = False
+	
+	ahelix = 11
+	kd_ahelix = 2.0
+	ahelix_nyeh = False
+	
+	cutoff = 30
+	
+	#Signal Peptide
+	for j in range(len(seq[:cutoff]) - speptide):
+		seq_win1 = seq[j:j + speptide]
+		
+		if 'P' in seq_win1: continue
+		if ave_hydrop(seq_win1) > kd_peptide:
+			signal = True
+			break
+	
+	#Alpha Helices
+	if signal:
+		for k in range(len(seq[cutoff:]) - ahelix):
+			seq_win2 = seq[k + cutoff:k + cutoff + ahelix]
+			
+			if 'P'in seq_win2: continue
+			if ave_hydrop(seq_win2) > kd_ahelix:
+				ahelix_nyeh = True
+				break
+				
+	if signal and ahelix_nyeh: print(name)
+	#if signal and ahelix_nyeh: print(name, defline)
+
+
+
+
+
+
+
+
 
 """
 python3 41transmembrane.py ~/DATA/E.coli/GCF_000005845.2_ASM584v2_protein.faa.gz
