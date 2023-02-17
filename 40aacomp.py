@@ -38,18 +38,21 @@ fp.close()
 aas = 'ACDEFGHIKLMNPQRSTVWY'
 tally = [0] * len(aas)
 
+#Filtering through content
 with gzip.open(sys.argv[1], 'rt') as fp:
 	while True:
 		line = fp.readline()
 		if line == '': break
 		if line.startswith('>'): continue
 		
+		#Tallying AAs
 		for aa in range(len(aas)):
 			for aaline in line:
 				if aaline == aas[aa]: tally[aa] += 1
 	
 totalaa = sum(tally)
 
+#Output
 for i in range(len(aas)):
 	print(f'{aas[i]} {tally[i]} {tally[i]/totalaa:.4f}')
 
