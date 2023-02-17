@@ -23,7 +23,6 @@
 
 import sys
 import mcb185
-import random
 
 #Function for Kyle-Dolittle Hydrophobicity
 def kd_hydrop(aa):
@@ -59,6 +58,7 @@ for defline, seq in mcb185.read_fasta(sys.argv[1]):
 	ahelix_nyeh = False
 	
 	cutoff = 30
+	
 	#Signal Peptide
 	for j in range(len(seq[:cutoff]) - speptide):
 		seq_win1 = seq[j:j + speptide]
@@ -84,15 +84,6 @@ for defline, seq in mcb185.read_fasta(sys.argv[1]):
 		print(defline)
 		#print(seq_win1, ave_hydrop(seq_win1))
 		#print(seq_win2, ave_hydrop(seq_win2))	
-
-
-
-
-
-
-
-
-
 
 """
 python3 41transmembrane.py ~/DATA/E.coli/GCF_000005845.2_ASM584v2_protein.faa.gz
