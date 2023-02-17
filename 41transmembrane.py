@@ -25,13 +25,6 @@ import sys
 import mcb185
 import random
 
-sample = ''
-aas = 'ACDEFGHIKLMNPQRSTVWY'
-
-for hehe in range(20):
-	sample += random.choice(aas)
-
-
 #Function for Kyle-Dolittle Hydrophobicity
 def kd_hydrop(aa):
 	hydrop = 0
@@ -66,27 +59,31 @@ for defline, seq in mcb185.read_fasta(sys.argv[1]):
 	ahelix_nyeh = False
 	
 	cutoff = 30
-	
 	#Signal Peptide
 	for j in range(len(seq[:cutoff]) - speptide):
 		seq_win1 = seq[j:j + speptide]
 		
 		if 'P' in seq_win1: continue
-		if ave_hydrop(seq_win1) > kd_peptide:
+		elif ave_hydrop(seq_win1) < kd_peptide: continue
+		else:
 			signal = True
 			break
 	
-	#Alpha Helices
+	#Hydrophobic Region
 	if signal:
 		for k in range(len(seq[cutoff:]) - ahelix):
 			seq_win2 = seq[k + cutoff:k + cutoff + ahelix]
 			
 			if 'P'in seq_win2: continue
-			if ave_hydrop(seq_win2) > kd_ahelix:
+			if ave_hydrop(seq_win2) < kd_ahelix: continue
+			else:
 				ahelix_nyeh = True
 				break
-				
-	if signal and ahelix_nyeh: print(name)
+	
+	if ahelix_nyeh:
+		print(name,seq)
+		print(seq_win1, ave_hydrop(seq_win1))
+		print(seq_win2, ave_hydrop(seq_win2))	
 	#if signal and ahelix_nyeh: print(name, defline)
 
 
