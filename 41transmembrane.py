@@ -81,7 +81,7 @@ for defline, seq in mcb185.read_fasta(sys.argv[1]):
 				break
 	
 	if ahelix_nyeh:
-		print(name, defline)
+		print(defline)
 		#print(seq_win1, ave_hydrop(seq_win1))
 		#print(seq_win2, ave_hydrop(seq_win2))	
 
