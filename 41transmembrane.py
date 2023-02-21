@@ -24,6 +24,38 @@
 import sys
 import mcb185
 
+def ave_hydro(window):
+	hydrop = 0
+
+	aas = 'ACDEFGHIKLMNPQRSTVWY'
+	aas_hs = [1.8, 2.5, -3.5, -3.5, 2.8, -0.4, -3.2, 4.5, -3.9, 3.8, 1.9, -3.5, -1.6, -3.5, -4.5, -0.8, -0.7, 4.2, -0.9, -1.3]
+	
+	for aa in range(len(window)):
+		hydrop += aas_hs[aas.find(window[aa])]
+	
+	return hydrop/len(window)
+
+
+def hydro_region(seq, w, t):
+	signal = False
+	for i in range(len(seq) - w):
+		win = seq[i: i + w]
+		
+		if 'P' in win: continue
+		elif ave_hydro(win) < t: continue
+		else:
+			return True
+	return False
+
+for defline, seq in mcb185.read_fasta(sys.argv[1]):
+	words = defline.split()
+	name = words[0]
+	
+	if hydro_region(seq[0:30], 8, 2.5) and hydro_region(seq[30:], 11, 2.0):
+		print(defline)
+
+"""
+#Initial Version
 #Function for Kyle-Dolittle Hydrophobicity
 def kd_hydrop(aa):
 	hydrop = 0
@@ -32,7 +64,7 @@ def kd_hydrop(aa):
 	aas_hs = [1.8, 2.5, -3.5, -3.5, 2.8, -0.4, -3.2, 4.5, -3.9, 3.8, 1.9, -3.5, -1.6, -3.5, -4.5, -0.8, -0.7, 4.2, -0.9, -1.3]
 	
 	hydrop += aas_hs[aas.find(aa)]
-	return hydrop
+	return hydro
 
 #Function for Average Hydrophobicity in a window
 def ave_hydrop(window):
@@ -84,7 +116,7 @@ for defline, seq in mcb185.read_fasta(sys.argv[1]):
 		print(defline)
 		#print(seq_win1, ave_hydrop(seq_win1))
 		#print(seq_win2, ave_hydrop(seq_win2))	
-
+"""
 """
 python3 41transmembrane.py ~/DATA/E.coli/GCF_000005845.2_ASM584v2_protein.faa.gz
 NP_414560.1 Na(+):H(+) antiporter NhaA [Escherichia coli str. K-12 substr. MG1655]
