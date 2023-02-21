@@ -38,7 +38,7 @@ def ave_hydro(window):
 
 def hydro_region(seq, w, t):
 	signal = False
-	for i in range(len(seq) - w):
+	for i in range(len(seq) - w + 1):
 		win = seq[i: i + w]
 		
 		if 'P' in win: continue
