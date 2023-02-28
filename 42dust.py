@@ -50,6 +50,7 @@ for defline, seq in mcb185.read_fasta(sys.argv[1]):
 		
 	seq = ''.join(seql)
 
+print(defline)
 for j in range(0, len(seq), 60):
 	print(seq[j:j + 60])
 
