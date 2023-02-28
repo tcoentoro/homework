@@ -31,17 +31,14 @@ parser.add_argument('--ws', required=False, type=int, default=10,
 	metavar='<int>', help='optional window size [default = %(default)in]')
 parser.add_argument('--en', required=False, type=float, default=1.0,
 	metavar='<float>', help='optional entropy threshold [default = %(default)i]')
+parser.add_argument('--wr', required=False, type=int, default=60,
+	metavar='<int>', help='optional character wrap [default = %(default)i characters]')
 
 # switch
 parser.add_argument('--mask', action='store_true', help='N-base/lowercase masking')
 
 
 arg = parser.parse_args()
-
-print(arg.file)
-print(arg.ws, arg.en)
-if arg.mask: print('N-based')
-else: print('lowercase')
 
 #Entropy Filtering Program
 def nucentropy(seq):
@@ -76,7 +73,9 @@ for defline, seq in mcb185.read_fasta(arg.file):
 					seql[i + j] = seq[i + j].lower()
 		#print(window, h)
 	seq = ''.join(seql)
-print(seq)
+
+for k in range(0, len(seq), arg.wr):
+	print(seq[k:k + arg.wr])
 
 
 """
