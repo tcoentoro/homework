@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 # 50dust.py
 
 # Write a better version of your 42dust.py program
@@ -14,6 +15,68 @@
 # Optional: benchmark your programs with different window sizes using time
 
 # Hint: make a smaller file for testing (e.g. e.coli.fna in the CLI below)
+
+import mcb185
+import math
+import argparse
+
+# setup
+parser = argparse.ArgumentParser(description='Nucleotide Entropy Filter')
+
+# positional argument(file)
+parser.add_argument('file', type=str, metavar='<path>', help='somefile')
+
+# Optional Values(Window Size, Entropy threshold)
+parser.add_argument('--ws', required=False, type=int, default=10,
+	metavar='<int>', help='optional window size [default = %(default)in]')
+parser.add_argument('--en', required=False, type=float, default=1.0,
+	metavar='<float>', help='optional entropy threshold [default = %(default)i]')
+
+# switch
+parser.add_argument('--mask', action='store_true', help='N-base/lowercase masking')
+
+
+arg = parser.parse_args()
+
+print(arg.file)
+print(arg.ws, arg.en)
+if arg.mask: print('N-based')
+else: print('lowercase')
+
+#Entropy Filtering Program
+def nucentropy(seq):
+	
+	nuc = 'ACGT'
+	tally = [0] * 4
+	ent = 0
+	
+	for i in range(len(seq)):
+		tally[nuc.find(seq[i])] += 1
+	
+	for val in tally:
+		if val == 0: continue
+		ent += -(val * math.log2(val/len(seq)))/len(seq)
+	
+	return ent
+
+for defline, seq in mcb185.read_fasta(arg.file):
+	seq = seq.upper()
+	seql = list(seq)
+	
+	for i in range(len(seq) - arg.ws + 1):
+		window = seq[i:i + arg.ws]
+		
+		h = nucentropy(window)
+		
+		if nucentropy(window) < arg.en:
+			for j in range(len(window)):
+				if arg.mask:
+					seql[i + j] = 'N'
+				else:
+					seql[i + j] = seq[i + j].lower()
+		#print(window, h)
+	seq = ''.join(seql)
+print(seq)
 
 
 """

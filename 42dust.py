@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 # 42dust.py
 
 # Write a program that performs entropy filtering on nucleotide fasta files
@@ -30,12 +31,13 @@ def nucentropy(seq):
 	ent = 0
 	
 	for i in range(len(seq)):
-		tally[nuc.find(seq[i])] += 1/len(seq)
+		tally[nuc.find(seq[i])] += 1
 	
 	for val in tally:
 		if val == 0: continue
-		ent += -(val * math.log2(val))
+		ent += -(val* math.log2(val/len(seq)))/len(seq)
 	
+	print(seq, ent)
 	return ent
 
 for defline, seq in mcb185.read_fasta(sys.argv[1]):
