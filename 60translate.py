@@ -16,6 +16,8 @@
 # Note: the ambituity is translated as X in the protein
 # Note: the stop codon is represented by *
 
+
+
 gcode = {
 	'AAA' : 'K',	'AAC' : 'N',	'AAG' : 'K',	'AAT' : 'N',
 	'ACA' : 'T',	'ACC' : 'T',	'ACG' : 'T',	'ACT' : 'T',
@@ -66,3 +68,18 @@ YELPDGQVITVGNERFRCPEAMFQPSFLGMESAGIHETSYNSIMKCDIDIRKDLYANTVL\
 SGGTTMYPGIADRMQKEITALAPSTMKIKIIAPPERKYSVWIGGSILASLSTFQQMWISK\
 QEYDESGPSIVHRKCF*\
 "
+
+def translate(seq):
+	seq = seq.upper()
+	protein = ""
+	for i in range(0, len(seq), 3):
+		if "Y" in seq[i:i + 3]:
+			protein += "X"
+		else:
+			protein += gcode[seq[i:i + 3]]
+	return protein
+
+protein = translate(actin_cds)
+
+for j in range(0, len(protein), 60):
+	print(protein[j:j+60])
