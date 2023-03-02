@@ -77,13 +77,13 @@ def translate(seq, frame = 0):
 	else: excess = 3 - (frame % 3)
 	
 	for i in range(frame % 3, len(seq) - excess, 3):
-		if "Y" in seq[i:i + 3]:
+		if seq[i:i + 3] not in gcode:
 			protein += "X"
 		else:
 			protein += gcode[seq[i:i + 3]]
 	return protein
 
-protein = translate(actin_cds, 2)
+protein = translate(actin_cds, 0)
 #protein = mcb185.translate(actin_cds)
 
 for j in range(0, len(protein), 60):
