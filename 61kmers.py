@@ -34,8 +34,14 @@ for defline, seq in mcb185.read_fasta(arg.file):
 		kmers[kmer] += 1
 		#print(kmer)
 
-for key, val in kmers.items():
-	print(key, val)
+for j in range(len(kmers)):
+	kmer_list = []
+	kmer_list += kmers.keys()
+
+kmer_list.sort()
+
+for keyss in kmer_list:
+	print(keyss, kmers[keyss])
 
 
 
