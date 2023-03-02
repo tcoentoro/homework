@@ -8,7 +8,41 @@
 # Hint: use argparse
 # Hint: use mcb185.read_fasta()
 
+import argparse
+import mcb185
 
+parser = argparse.ArgumentParser(description='Kmer Count for a Fasta File')
+
+parser.add_argument('file', type=str, metavar='<path>', help='somefile')
+parser.add_argument('--ks', required=False, type=int, default=1,
+	metavar='<int>', help='optional kmer size [default=%(default)i]')
+
+arg = parser.parse_args()
+
+"""
+sample = 'ACGTGACTGACTGCTAGCATCAGCTACGATCAGCTACGACTGACATCGACTATCN'
+"""
+for defline, seq in mcb185.read_fasta(arg.file):
+	seq = seq.upper()
+	kmers = {}
+	
+	for i in range(0, len(seq)):
+		kmer = seq[i:i + arg.ks]
+
+		if kmer not in kmers:
+			kmers[kmer] = 0
+		kmers[kmer] += 1
+		#print(kmer)
+
+for key, val in kmers.items():
+	print(key, val)
+
+
+
+#question: do i need to sort it every after iteration?
+#are kmers supposed to overlap? (overlap = answer below, no overlap = diff ans)
+#how to sort a dictionary?
+#what should I do with the remainder nucleotide?
 """
 python3 60kmers.py ~/DATA/E.coli/GCF_000005845.2_ASM584v2_genomic.fna.gz 2
 AA 338006
