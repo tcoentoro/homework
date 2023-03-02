@@ -16,7 +16,7 @@
 # Note: the ambituity is translated as X in the protein
 # Note: the stop codon is represented by *
 
-
+import mcb185
 
 gcode = {
 	'AAA' : 'K',	'AAC' : 'N',	'AAG' : 'K',	'AAT' : 'N',
@@ -68,7 +68,7 @@ YELPDGQVITVGNERFRCPEAMFQPSFLGMESAGIHETSYNSIMKCDIDIRKDLYANTVL\
 SGGTTMYPGIADRMQKEITALAPSTMKIKIIAPPERKYSVWIGGSILASLSTFQQMWISK\
 QEYDESGPSIVHRKCF*\
 "
-
+#function already copied into mcb185 library
 def translate(seq):
 	seq = seq.upper()
 	protein = ""
@@ -79,7 +79,8 @@ def translate(seq):
 			protein += gcode[seq[i:i + 3]]
 	return protein
 
-protein = translate(actin_cds)
+#protein = translate(actin_cds)
+protein = mcb185.translate(actin_cds)
 
 for j in range(0, len(protein), 60):
 	print(protein[j:j+60])
