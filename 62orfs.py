@@ -15,7 +15,112 @@
 
 # Note: your genes should be similar to those in the real genome
 
+import mcb185
+import argparse
 
+#CLI input
+parser = argparse.ArgumentParser(description ='ORF finder')
+
+parser.add_argument('file', type=str, metavar='<path>', help='somefile')
+parser.add_argument('--orf', required=False, type=int, default=300,
+	metavar='<int>', help='optional orf min. size [default=%(default)i]')
+
+arg = parser.parse_args()
+
+sample = 'GCGATGCTGATGCTGATCGTATAACCCATGCAGGCGATGCTGATGCTGATCGTATAACCCATGCAG'
+
+#Reverse DNA Function
+def reverse(parent):
+	rseq = ''
+	for i in range(len(parent)):
+		if parent[i] == 'A': rseq += 'T'
+		elif parent[i] == 'C': rseq += 'G'
+		elif parent[i] == 'G': rseq += 'C'
+		elif parent[i] == 'T': rseq += 'A'
+		else: rseq += 'X'
+	return rseq
+
+
+#ORF using protein
+def orf_p(protein):
+	orf = False
+	locations = {}
+	for i in range(len(protein)):
+
+		if not orf:
+			if protein[i] != 'M':
+				#print(i, protein[i], 'n')
+				continue
+			else:
+				start = (i + 1) * 3 - 2
+				orf = True
+		
+		if orf:
+			#print(i, protein[i], 'e')
+			if protein[i] == '*':
+				locations[start] = (i + 1) * 3
+				orf = False
+		
+	return(locations)
+
+#ORF using DNA
+def orf(seq):
+	i = 0
+	orf = False
+	locations = {}
+	
+	while i < len(seq):
+		codon = seq[i:i+3]
+		
+		#Find a start codon
+		if not orf:
+			if codon != 'ATG':
+				#print(i, codon)
+				i += 1
+			else:
+				orf = True
+				start = i
+		
+		#Find a stop codon
+		if orf:
+			end = False
+			if codon == 'TAA': end = True
+			elif codon == 'TAG': end = True
+			elif codon == 'TGA' : end = True
+			else:
+				#print(i, codon, 'y')
+				i += 3
+			
+			if end:
+				#print(i, codon)
+				locations[start + 1] = i + 3
+				orf = False
+				i += 3
+	return locations
+
+print(orf(sample))
+print(orf_p(mcb185.translate(sample)))
+
+listy = orf(sample)
+
+for item in listy:
+	print(item, listy[item])
+
+
+
+
+
+"""
+for defline, seq in mcb185.read_fasta(arg.file):
+	words = defline.split()
+	name = words[0]
+	seqorf = orf(seq)
+
+
+	
+	#print(orf_p(mcb185.translate(seq)))
+	print(orf(seq))
+"""
 """
 python3 62orfs.py ~/DATA/E.coli/GCF_000005845.2_ASM584v2_genomic.fna.gz
 NC_000913.3 108 500 - MVFSIIATRW
