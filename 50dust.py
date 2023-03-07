@@ -74,9 +74,9 @@ for defline, seq in mcb185.read_fasta(arg.file):
 		#print(window, h)
 	seq = ''.join(seql)
 
-print(defline)
-for k in range(0, len(seq), arg.wr):
-	print(seq[k:k + arg.wr])
+	print(f'>{defline}')
+	for k in range(0, len(seq), arg.wr):
+		print(seq[k:k + arg.wr])
 
 
 """
