@@ -42,45 +42,39 @@ def reverse(parent):
 
 #make an orf function only for per frame with an optional frame function
 
- 
-def orf(seq, size=300):
+
+def orfall(seq, size=0, anti=False):
+	if anti: seq = reverse(seq)
+	
 	for i in range(3):
-		while i <= len(seq) -3:
+		while i <= len(seq) -3: #<-- iterates through frames
 			codon = seq[i:i+3]
 				
-			if codon == 'ATG':
+			if codon == 'ATG': #<-- finds start codon
 				for j in range(i+3, len(seq)-2, 3):
 					codon = seq[j:j+3]
-					if codon == 'TAA' or codon == 'TAG' or codon == 'TGA':
-						if j-i > size:
-							yield i+1, j+3, mcb185.translate(seq[i:j+2])
-						i = j
-						break
+					if codon == 'TAA' or codon == 'TAG' or codon == 'TGA': #finds stop codon
+						if j-i > size: #<-- length restriction
+							if anti:
+								yield len(seq)-j-2, len(seq)-i, mcb185.translate(seq[i:j+2])
+							else:
+								yield i+1, j+3, mcb185.translate(seq[i:j+2])
+						i = j #<-- skips over to next orf
+						break #<-- discards start codon afer stop has been found
 						
 			i += 3
-
-	
-
-#print(orf2(sample))
-
-
-#for i in range(3):
-#	print(orf(sample, i))
-
 
 for defline, seq in mcb185.read_fasta(arg.file):
 	words = defline.split()
 	name = words[0]
 	rseq = reverse(seq[:-1])
-	for beg, end, pro in orf(seq):
+	for beg, end, pro in orfall(seq, arg.orf):
 		print(name, beg, end, '+', pro[:10])
 	
-	for rbeg, rend, rpro in orf(reverse(seq)):
-		print(name, len(seq)-rend+1, len(seq)-rbeg+1, '-', rpro[:10])
+	for rbeg, rend, rpro in orfall(seq, arg.orf, True):
+		print(name, rbeg, rend, '-', rpro[:10])
 
 
-
-#Notes: still need to put in default nt = 300
 """
 python3 62orfs.py ~/DATA/E.coli/GCF_000005845.2_ASM584v2_genomic.fna.gz
 NC_000913.3 108 500 - MVFSIIATRW
