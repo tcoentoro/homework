@@ -69,9 +69,14 @@ def orf(seq, size=300):
 
 
 for defline, seq in mcb185.read_fasta(arg.file):
-	
+	words = defline.split()
+	name = words[0]
+	rseq = reverse(seq[:-1])
 	for beg, end, pro in orf(seq):
-		print(beg, end, pro[:10])
+		print(name, beg, end, '+', pro[:10])
+	
+	for rbeg, rend, rpro in orf(reverse(seq)):
+		print(name, len(seq)-rend+1, len(seq)-rbeg+1, '-', rpro[:10])
 
 
 
