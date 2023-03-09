@@ -40,6 +40,9 @@ def reverse(parent):
 		else: rseq += 'X'
 	return rseq
 
+def reversecomp(parent):
+	return parent[::-1]
+
 def complementary(parent):
 	rseq = ''
 	for i in range(len(parent) -1, -1, -1):
@@ -82,11 +85,15 @@ for defline, seq in mcb185.read_fasta(arg.file):
 	
 	for rbeg, rend, rpro in orfall(seq, arg.orf, True):
 		print(name, rbeg, rend, '-', rpro[:10])
-
+"""
+print('sample')
 print(sample)
 print(complementary(sample))
+print('complementary')
+print()
 print(reverse(sample))
-
+print(reversecomp(sample))
+"""
 """
 python3 62orfs.py ~/DATA/E.coli/GCF_000005845.2_ASM584v2_genomic.fna.gz
 NC_000913.3 108 500 - MVFSIIATRW
