@@ -40,11 +40,20 @@ def reverse(parent):
 		else: rseq += 'X'
 	return rseq
 
-#make an orf function only for per frame with an optional frame function
+def complementary(parent):
+	rseq = ''
+	for i in range(len(parent) -1, -1, -1):
+		if parent[i] == 'A': rseq += 'T'
+		elif parent[i] == 'C': rseq += 'G'
+		elif parent[i] == 'G': rseq += 'C'
+		elif parent[i] == 'T': rseq += 'A'
+		else: rseq += 'X'
+	return rseq[::-1]
 
 
-def orfall(seq, size=0, anti=False):
-	if anti: seq = reverse(seq)
+
+def orfall(seq, size=0, rev=False):
+	if rev: seq = reverse(seq)
 	
 	for i in range(3):
 		while i <= len(seq) -3: #<-- iterates through frames
@@ -55,7 +64,7 @@ def orfall(seq, size=0, anti=False):
 					codon = seq[j:j+3]
 					if codon == 'TAA' or codon == 'TAG' or codon == 'TGA': #finds stop codon
 						if j-i > size: #<-- length restriction
-							if anti:
+							if rev:
 								yield len(seq)-j-2, len(seq)-i, mcb185.translate(seq[i:j+2])
 							else:
 								yield i+1, j+3, mcb185.translate(seq[i:j+2])
@@ -74,6 +83,9 @@ for defline, seq in mcb185.read_fasta(arg.file):
 	for rbeg, rend, rpro in orfall(seq, arg.orf, True):
 		print(name, rbeg, rend, '-', rpro[:10])
 
+print(sample)
+print(complementary(sample))
+print(reverse(sample))
 
 """
 python3 62orfs.py ~/DATA/E.coli/GCF_000005845.2_ASM584v2_genomic.fna.gz
