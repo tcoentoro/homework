@@ -55,7 +55,7 @@ def complementary(parent):
 
 
 
-def orfall(seq, size=0, rev=False):
+def orf(seq, size=0, rev=False):
 	if rev: seq = reverse(seq)
 	
 	for i in range(3):
@@ -80,10 +80,10 @@ for defline, seq in mcb185.read_fasta(arg.file):
 	words = defline.split()
 	name = words[0]
 	rseq = reverse(seq[:-1])
-	for beg, end, pro in orfall(seq, arg.orf):
+	for beg, end, pro in orf(seq, arg.orf):
 		print(name, beg, end, '+', pro[:10])
 	
-	for rbeg, rend, rpro in orfall(seq, arg.orf, True):
+	for rbeg, rend, rpro in orf(seq, arg.orf, True):
 		print(name, rbeg, rend, '-', rpro[:10])
 """
 print('sample')
