@@ -27,12 +27,12 @@ parser.add_argument('--orf', required=False, type=int, default=300,
 
 arg = parser.parse_args()
 
-sample = 'GCGATGCTGATGCTGATCGTATAACCCATGCAGGCGATGCTGATGCTGATCGTATAACCCATGCAG'
+sample = 'GCGATGATGCTATGCTGATCGTATTAACCCATGCAGGCGATGCTGATGCTGATCGTATAACCCATGCATGA'
 
 #Reverse DNA Function
 def reverse(parent):
 	rseq = ''
-	for i in range(len(parent)):
+	for i in range(len(parent) -1, -1, -1):
 		if parent[i] == 'A': rseq += 'T'
 		elif parent[i] == 'C': rseq += 'G'
 		elif parent[i] == 'G': rseq += 'C'
@@ -40,87 +40,42 @@ def reverse(parent):
 		else: rseq += 'X'
 	return rseq
 
+#make an orf function only for per frame with an optional frame function
 
-#ORF using protein
-def orf_p(protein):
-	orf = False
-	locations = {}
-	for i in range(len(protein)):
+ 
+def orf(seq, size=300):
+	for i in range(3):
+		while i <= len(seq) -3:
+			codon = seq[i:i+3]
+				
+			if codon == 'ATG':
+				for j in range(i+3, len(seq)-2, 3):
+					codon = seq[j:j+3]
+					if codon == 'TAA' or codon == 'TAG' or codon == 'TGA':
+						if j-i > size:
+							yield i+1, j+3, mcb185.translate(seq[i:j+2])
+						i = j
+						break
+						
+			i += 3
 
-		if not orf:
-			if protein[i] != 'M':
-				#print(i, protein[i], 'n')
-				continue
-			else:
-				start = (i + 1) * 3 - 2
-				orf = True
-		
-		if orf:
-			#print(i, protein[i], 'e')
-			if protein[i] == '*':
-				locations[start] = (i + 1) * 3
-				orf = False
-		
-	return(locations)
-
-#ORF using DNA
-def orf(seq):
-	i = 0
-	orf = False
-	locations = {}
 	
-	while i < len(seq):
-		codon = seq[i:i+3]
-		
-		#Find a start codon
-		if not orf:
-			if codon != 'ATG':
-				#print(i, codon)
-				i += 1
-			else:
-				orf = True
-				start = i
-		
-		#Find a stop codon
-		if orf:
-			end = False
-			if codon == 'TAA': end = True
-			elif codon == 'TAG': end = True
-			elif codon == 'TGA' : end = True
-			else:
-				#print(i, codon, 'y')
-				i += 3
-			
-			if end:
-				#print(i, codon)
-				locations[start + 1] = i + 3
-				orf = False
-				i += 3
-	return locations
 
-print(orf(sample))
-print(orf_p(mcb185.translate(sample)))
-
-listy = orf(sample)
-
-for item in listy:
-	print(item, listy[item])
+#print(orf2(sample))
 
 
+#for i in range(3):
+#	print(orf(sample, i))
 
 
-
-"""
 for defline, seq in mcb185.read_fasta(arg.file):
-	words = defline.split()
-	name = words[0]
-	seqorf = orf(seq)
-
-
 	
-	#print(orf_p(mcb185.translate(seq)))
-	print(orf(seq))
-"""
+	for beg, end, pro in orf(seq):
+		print(beg, end, pro[:10])
+
+
+
+#Notes: still need to put in default nt = 300
 """
 python3 62orfs.py ~/DATA/E.coli/GCF_000005845.2_ASM584v2_genomic.fna.gz
 NC_000913.3 108 500 - MVFSIIATRW
