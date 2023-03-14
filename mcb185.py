@@ -59,4 +59,15 @@ def translate(seq, frame=0):
 		else:
 			protein += gcode[seq[i:i + 3]]
 	return protein
+
+def reverse(parent):
+	rseq = ''
+	parent = parent.upper()
+	for i in range(len(parent) -1, -1, -1):
+		if parent[i] == 'A': rseq += 'T'
+		elif parent[i] == 'C': rseq += 'G'
+		elif parent[i] == 'G': rseq += 'C'
+		elif parent[i] == 'T': rseq += 'A'
+		else: rseq += 'X'
+	return rseq
 # def other functions...
