@@ -24,8 +24,9 @@ parser.add_argument('file', type=str, metavar='<path>', help='genomic bank file'
 arg = parser.parse_args()
 
 sequence = ""
+scodons = {}
 
-#will ignore any pseudogenes
+#Grabbing the Sequence
 with gzip.open(arg.file, 'rt') as fp:
 	for line in fp:
 		if line.startswith('ORIGIN'):
@@ -34,8 +35,9 @@ with gzip.open(arg.file, 'rt') as fp:
 		f = line.split()
 		sequence += "".join(f[1:])
 
-#print(len(sequence))
+sequence = sequence.upper()
 
+#Finding Coordinates, ignoring pseudogenes
 with gzip.open(arg.file, 'rt') as fp:
 	for line in fp:
 		for match in re.finditer('\s(CDS)\s', line):
@@ -45,11 +47,18 @@ with gzip.open(arg.file, 'rt') as fp:
 			end = int(coor.group(2))
 			
 			if 'complement' in line:
-				nyeh = mcb185.reverse(sequence[end-3:end])
+				scodon = mcb185.reverse(sequence[end-3:end])
+			else:
+				scodon = sequence[beg-1:beg+2]
 			
-			#print(sequence[beg-1:beg+2])
-			#if 'complement' in line:
-			#print(line, coor.group(1),)
+			if scodon not in scodons:
+				scodons[scodon] = 0
+			
+			scodons[scodon] += 1
+
+#Output
+for item in scodons:
+	print(item, scodons[item])
 
 
 """
