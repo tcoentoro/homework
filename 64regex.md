@@ -24,7 +24,7 @@ regex	usage
 	\s	  matches any whitespace
 
 
-functions:
+Functions:
 
 string = 'abcdefg'
 item = a
