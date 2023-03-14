@@ -19,7 +19,7 @@ import re
 import gzip
 import mcb185
 
-parser = argparse.ArgumentParser(description = 'ATG Finder RegEx')
+parser = argparse.ArgumentParser(description = 'Start Codon Counter RegEx')
 parser.add_argument('file', type=str, metavar='<path>', help='genomic bank file')
 arg = parser.parse_args()
 
