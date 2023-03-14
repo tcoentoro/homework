@@ -69,21 +69,20 @@ SGGTTMYPGIADRMQKEITALAPSTMKIKIIAPPERKYSVWIGGSILASLSTFQQMWISK\
 QEYDESGPSIVHRKCF*\
 "
 #older version of function already copied into mcb185 library
-def translate(seq, frame = 0):
+def translate(seq, frame=0):
 	seq = seq.upper()
 	protein = ""
+	frame %= 3
 	
-	if frame % 3 == 0: excess = 0 
-	else: excess = 3 - (frame % 3)
-	
-	for i in range(frame % 3, len(seq) - excess, 3):
+	for i in range(frame, len(seq), 3):
 		if seq[i:i + 3] not in gcode:
 			protein += "X"
 		else:
 			protein += gcode[seq[i:i + 3]]
 	return protein
 
-protein = translate(actin_cds, 0)
+#testing + printout
+protein = translate(actin_cds, 1)
 #protein = mcb185.translate(actin_cds)
 
 for j in range(0, len(protein), 60):
