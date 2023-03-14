@@ -19,20 +19,16 @@ parser.add_argument('--ks', required=False, type=int, default=1,
 
 arg = parser.parse_args()
 
-"""
-sample = 'ACGTGACTGACTGCTAGCATCAGCTACGATCAGCTACGACTGACATCGACTATCN'
-"""
 for defline, seq in mcb185.read_fasta(arg.file):
 	seq = seq.upper()
 	kmers = {}
 	
-	for i in range(0, len(seq)):
+	for i in range(0, len(seq) - arg.ks + 1):
 		kmer = seq[i:i + arg.ks]
 
 		if kmer not in kmers:
 			kmers[kmer] = 0
 		kmers[kmer] += 1
-		#print(kmer)
 
 for j in range(len(kmers)):
 	kmer_list = []
