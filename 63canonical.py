@@ -24,7 +24,7 @@ parser.add_argument('file', type=str, metavar='<path>', help='genomic bank file'
 arg = parser.parse_args()
 
 sequence = ""
-scodons = {}
+start_cs = {}
 
 #Grabbing the Sequence
 with gzip.open(arg.file, 'rt') as fp:
@@ -47,18 +47,18 @@ with gzip.open(arg.file, 'rt') as fp:
 			end = int(coor.group(2))
 			
 			if 'complement' in line:
-				scodon = mcb185.reverse(sequence[end-3:end])
+				start_c = mcb185.reverse(sequence[end-3:end])
 			else:
-				scodon = sequence[beg-1:beg+2]
+				start_c = sequence[beg-1:beg+2]
 			
-			if scodon not in scodons:
-				scodons[scodon] = 0
+			if start_c not in start_cs:
+				start_cs[start_c] = 0
 			
-			scodons[scodon] += 1
+			start_cs[start_c] += 1
 
 #Output
-for item in scodons:
-	print(item, scodons[item])
+for item in start_cs:
+	print(item, start_cs[item])
 
 
 """
